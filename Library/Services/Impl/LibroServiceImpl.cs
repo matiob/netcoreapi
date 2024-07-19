@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Library.Domains;
 using Library.DTOs.Request.Create;
 using Library.DTOs.Request.Update;
@@ -154,6 +155,19 @@ namespace Library.Services.Impl
                 throw new KeyNotFoundException("[S] Genero no encontrado");
             }
             _mapper.Map(libro.Genero, genero); // mapeo sin instancia
+            return libro;
+        }
+
+        public async Task<Libro> TestValidationsManual(Libro libro)
+        {
+            //var validacion = await nobreValidator.ValidateAsync(libro);
+            //if (!validacion.IsValid)
+            //{
+            //    // concatener strings
+            //    var errorMessage = string.Join(", ",
+            //        validacion.Errors.Select(x => x.ErrorMessage));
+            //    return libro;
+            //}
             return libro;
         }
     }

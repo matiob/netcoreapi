@@ -96,6 +96,8 @@ namespace Library.Services.Impl
                     throw new AutorExistenteException(dto.Nombre);
                 }
                 var autor = _mapper.Map<Autor>(dto);
+                // Setear fecha del día
+                // autor.FechaNacimiento = DateTime.Now;
                 if (autor.PaisId != null)
                 {
                     var pais = _paisRepository.GetByCodeAsync(autor.PaisId);

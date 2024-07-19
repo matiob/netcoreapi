@@ -16,6 +16,7 @@ namespace Library.Repositories.Impl
             try
             {
                 return await _context.Autores
+                    .Where(x => x.Libros.Count > 0) // condiciones custom
                     //.Include(autor => autor.Pais) // join
                     .ToListAsync();
             }

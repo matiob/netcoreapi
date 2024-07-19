@@ -6,6 +6,7 @@ using Library.Repositories.Impl;
 using Library.Services;
 using Library.Services.Auth;
 using Library.Services.Impl;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -33,7 +34,7 @@ builder.Services.AddSwaggerGen((options) => // JWT para swagger
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services.AddHttpContextAccessor(); // Httpaccesor
+builder.Services.AddHttpContextAccessor(); // Httpaccesor (para api client)
 
 builder.Services.AddTransient<ILibroRepository, LibroRepositoryImpl>(); // Repository
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepositoryImpl>();
@@ -67,6 +68,10 @@ builder.Services.AddFluentValidation((options) => // Validations
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
 );
 // builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters(); // Validations => no funciona
+//builder.Services.Configure<ApiBehaviorOptions>(options => // Quitar validacion automatica
+//{
+//    options.SuppressModelStateInvalidFilter = true;
+//}); // permite ejecutar los validadores en los services de manera manual
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options => // JWT
 {

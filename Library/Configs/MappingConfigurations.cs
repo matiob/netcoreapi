@@ -17,6 +17,8 @@ namespace Library.Configs
             CreateMap<UpdateAutorDTO, Autor>()
                 .ForMember(dest => dest.Id, source => source.MapFrom(x => Guid.Parse(x.Id))) // string a Guid
                 .ForMember(dest => dest.FechaNacimiento, source => source.MapFrom(x => DateTime.Parse(x.FechaNacimiento))); // string a Fecha
+                //.ForMember(x => x.Cantidad,
+                //    opt => opt.MapFrom(src => src.Libros.Count)); // lista
             CreateMap<CreateAutorDTO, Autor>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
                 .ForMember(dest => dest.FechaNacimiento, source => source.MapFrom(x => DateTime.Parse(x.FechaNacimiento)));

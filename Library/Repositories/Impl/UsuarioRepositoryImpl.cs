@@ -90,13 +90,28 @@ namespace Library.Repositories.Impl
         {
             try
             {
-                var existe = _context.Usuarios.Any(u => u.Email == email);
+                var existe = await _context.Usuarios.AnyAsync(u => u.Email.Equals(email));
                 return existe;
             }
             catch (Exception ex)
             {
                 throw new Exception("[R] Error " + ex.Message);
             }
+        }
+
+        public async Task<List<Usuario>> GetUsuariosSinRolConEmail(string rol)
+        {
+            // Construcción de una consulta LINQ: es una IQueryable<int>
+            // todavía no se ejecuta en la DB, es una representación de la consulta
+            var usuariosIds = _context.Usuarios
+                .Where(x => x.Rol == rol).Select(x => x.Id); 
+
+            var usuariosSinRolAndEmail = await _context.Usuarios
+                .Where(x => !usuariosIds.Contains(x.Id) && x.Email != null)
+                .ToListAsync();
+
+            return usuariosSinRolAndEmail;
+
         }
     }
 }
