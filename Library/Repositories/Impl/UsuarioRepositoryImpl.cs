@@ -1,8 +1,6 @@
 ﻿using Library.Context;
 using Library.Domains;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Library.Repositories.Impl
 {
@@ -109,6 +107,11 @@ namespace Library.Repositories.Impl
             var usuariosSinRolAndEmail = await _context.Usuarios
                 .Where(x => !usuariosIds.Contains(x.Id) && x.Email != null)
                 .ToListAsync();
+
+            // En un paso
+            //var albanilesNotInObra2 = await _context.Albaniles
+            //    .Where(a => a.Activo && !_context.AlbanilesXObras.Any(ao => ao.IdObra == obraId && ao.IdAlbanil == a.Id))
+            //    .ToListAsync();
 
             return usuariosSinRolAndEmail;
 
